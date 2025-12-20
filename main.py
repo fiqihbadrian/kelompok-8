@@ -49,7 +49,7 @@ while True:
         banyak_desain_editing = int(input("MASUKAN JUMLAH JASA YANG INGIN DIPESAN: "))
 
         if banyak_desain_editing < 1:
-            print("Jumlah jasa minimal 1. Silakan coba lagi.")
+            print(f"{RED}Jumlah jasa minimal 1. Silakan coba lagi.{RESET}")
         else:
             break
 
@@ -103,94 +103,93 @@ for harga in harga_jasa:
 
 
 # Tampilan ringkasan pesanan
-if kode_jasa:
-    print("\n\n")
-    print("="*54)
-    print(f"{GREEN}RINGKASAN PESANAN{RESET}".center(63))
-    print("-" * 54)
-    print(f"Nama Pemesan: {nama}")
-    print(f"No. Telepon : {notelp}")
+print("\n\n")
+print("="*54)
+print(f"{GREEN}RINGKASAN PESANAN{RESET}".center(63))
+print("-" * 54)
+print(f"Nama Pemesan: {nama}")
+print(f"No. Telepon : {notelp}")
 
 
-    # Header Table
-    print("-" * 54)
-    print(
-    f"{' ':<2}"
-    f"{'No.':<8}"
-    f"{'Kode Jasa':<18}"
-    f"{'Jenis Jasa':<19}"
-    f"{'Harga':<14}"
+# Header Table
+print("-" * 54)
+print(
+f"{' ':<2}"
+f"{'No.':<8}"
+f"{'Kode Jasa':<18}"
+f"{'Jenis Jasa':<19}"
+f"{'Harga':<14}"
+)
+print("-" * 54)
+
+
+# Tampilan jasa yang dipesan (list pandas)
+df = pd.DataFrame({
+    "No.": range(1, len(kode_jasa) + 1),
+    "Kode Jasa": kode_jasa,
+    "Jenis Jasa": nama_jasa,
+    "Harga": harga_jasa
+})
+
+
+# mengatur list pandas (jelasin apa itu index kenapa header di falsekan)
+print(
+df.to_string(
+    index=False,
+    header=False,
+    col_space={
+        "No.": 4,
+        "Kode Jasa": 11,
+        "Jenis Jasa": 21,
+        "Harga": 15
+    },
+    formatters={
+        "Harga": lambda x: f"Rp {x:,.0f}".replace(",", ".")
+    }
     )
-    print("-" * 54)
+)
 
 
-    # Tampilan jasa yang dipesan (list pandas)
-    df = pd.DataFrame({
-        "No.": range(1, len(kode_jasa) + 1),
-        "Kode Jasa": kode_jasa,
-        "Jenis Jasa": nama_jasa,
-        "Harga": harga_jasa
-    })
+print("-"*54)
+print(f"{YELLOW}Notes Tambahan{RESET}".center(63))
+print(f"{'Kode Jasa':<12}{'Note'}")
+print(f"{'---------':<12}{'----'}")
 
-    
-    # mengatur list pandas (jelasin apa itu index kenapa header di falsekan)
-    print(
-    df.to_string(
-        index=False,
-        header=False,
-        col_space={
-            "No.": 4,
-            "Kode Jasa": 11,
-            "Jenis Jasa": 21,
-            "Harga": 15
-        },
-        formatters={
-            "Harga": lambda x: f"Rp {x:,.0f}".replace(",", ".")
-        }
+
+# percabangan untuk catatan
+for i in range(len(note)):
+    if note[i] == '':
+        print(
+            f"{kode_jasa[i]:<12}"
+            f"{RED}Tidak ada note{RESET}"
         )
-    )
+    else:
+        print(
+            f"{kode_jasa[i]:<12}"
+            f"{note[i]}"
+        )
 
 
-    print("-"*54)
-    print(f"{YELLOW}Notes Tambahan{RESET}".center(63))
-    print(f"{'Kode Jasa':<12}{'Note'}")
-    print(f"{'---------':<12}{'----'}")
+print("-"*54)
+print(f"Total Harga: Rp {total:,}")
+print("="*54)
 
 
-    # percabangan untuk catatan
-    for i in range(len(note)):
-        if note[i] == '':
-            print(
-                f"{kode_jasa[i]:<12}"
-                f"{RED}Tidak ada note{RESET}"
-            )
+# Proses pembayaran dan kembalian
+while True:
+    try:
+        pembayaran = int(input("Masukkan jumlah pembayaran (Rp): "))
+
+        if pembayaran < total:
+            print("\033[31m Pembayaran tidak cukup! Silakan coba lagi.\033[0m")
         else:
-            print(
-                f"{kode_jasa[i]:<12}"
-                f"{note[i]}"
-            )
+            kembalian = pembayaran - total
+            print(f"Pembayaran diterima. Kembalian Anda: Rp {kembalian:,}")
+            break
+    except ValueError:
+        print("\033[31m Input harus berupa ANGKA! Silakan coba lagi.\033[0m")
 
 
-    print("-"*54)
-    print(f"Total Harga: Rp {total:,}")
-    print("="*54)
-
-
-    # Proses pembayaran dan kembalian
-    while True:
-        try:
-            pembayaran = int(input("Masukkan jumlah pembayaran (Rp): "))
-
-            if pembayaran < total:
-                print("\033[31m Pembayaran tidak cukup! Silakan coba lagi.\033[0m")
-            else:
-                kembalian = pembayaran - total
-                print(f"Pembayaran diterima. Kembalian Anda: Rp {kembalian:,}")
-                break
-        except ValueError:
-            print("\033[31m Input harus berupa ANGKA! Silakan coba lagi.\033[0m")
-
-    
-    print("="*54)
-    print("Terima kasih telah menggunakan layanan kami!\npembelian anda akan segera kami proses.")
-    print("="*54)
+print("="*54)
+print("Terima kasih telah menggunakan layanan kami!\npembelian anda akan segera kami proses.")
+print("="*54)
