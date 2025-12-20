@@ -1,5 +1,8 @@
-import pandas as pd
 # jasa editing dan desain [type B]
+
+
+# Modul
+import pandas as pd
 
 
 # kode warna
@@ -51,7 +54,7 @@ while True:
             break
 
     except ValueError:
-        print("\033[31m Input harus berupa ANGKA! Silakan coba lagi.\033[0m")
+        print(f"{RED}Input harus berupa ANGKA! Silakan coba lagi.{RESET}")
 print("-"*54)
 
 
@@ -90,7 +93,7 @@ for i in range(banyak_desain_editing):
             break
 
         else:
-            print("\033[31m Kode jasa tidak valid! Silakan masukkan EF, ED, DD, atau DC. \033[0m")
+            print(f"{RED}Kode jasa tidak valid! Silakan masukkan EF, ED, DD, atau DC.{RESET}")
 
 
 # Menghitung total harga aritmatika
