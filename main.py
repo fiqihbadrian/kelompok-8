@@ -46,7 +46,9 @@ notelp = input("MASUKAN NO TELEPON ANDA: ")
 while True:
     try:
         # Input berapa banyak yang ingin di pesan
-        banyak_desain_editing = int(input("MASUKAN JUMLAH JASA YANG INGIN DIPESAN: "))
+        banyak_desain_editing = int(input(
+            "MASUKAN JUMLAH JASA YANG INGIN DIPESAN: "
+            ))
 
         if banyak_desain_editing < 1:
             print(f"{RED}Jumlah jasa minimal 1. Silakan coba lagi.{RESET}")
