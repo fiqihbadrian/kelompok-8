@@ -1,6 +1,3 @@
-# jasa editing dan desain [type B]
-
-
 # Modul
 import pandas as pd
 
